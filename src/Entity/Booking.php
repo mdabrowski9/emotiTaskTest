@@ -16,11 +16,20 @@ class Booking
     private $id;
 
     #[ORM\OneToMany(mappedBy: 'booking', targetEntity: Room::class)]
-    private $room_ids;
+    private $rooms;
+
+    #[ORM\Column(type: 'date')]
+    private $dateFrom;
+
+    #[ORM\Column(type: 'date')]
+    private $dateTo;
+
+    #[ORM\Column(type: 'integer')]
+    private $userId;
 
     public function __construct()
     {
-        $this->room_ids = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -31,23 +40,59 @@ class Booking
     /**
      * @return Collection<int, Room>
      */
-    public function getRoomIds(): Collection
+    public function getRooms(): Collection
     {
-        return $this->room_ids;
+        return $this->rooms;
     }
 
-    public function addRoomId(Room $roomId): self
+    public function addRoom(Room $room): self
     {
-        if (!$this->room_ids->contains($roomId)) {
-            $this->room_ids[] = $roomId;
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
         }
 
         return $this;
     }
 
-    public function removeRoomId(Room $roomId): self
+    public function removeRoom(Room $room): self
     {
-        $this->room_ids->removeElement($roomId);
+        $this->rooms->removeElement($room);
+
+        return $this;
+    }
+
+    public function getDateFrom(): ?\DateTimeInterface
+    {
+        return $this->dateFrom;
+    }
+
+    public function setDateFrom(\DateTimeInterface $dateFrom): self
+    {
+        $this->dateFrom = $dateFrom;
+
+        return $this;
+    }
+
+    public function getDateTo(): ?\DateTimeInterface
+    {
+        return $this->dateTo;
+    }
+
+    public function setDateTo(\DateTimeInterface $dateTo): self
+    {
+        $this->dateTo = $dateTo;
+
+        return $this;
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(int $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
