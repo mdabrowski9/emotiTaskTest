@@ -3,16 +3,37 @@
 namespace App\Services;
 
 use App\Entity\Booking;
+use App\Entity\User;
 use App\Model\RequestBookingAddDto;
 use App\Repository\BookingRepository;
 use DateInterval;
 use League\Period\Bounds;
 use League\Period\Period;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class AvailabilityService
 {
     public function __construct(private BookingRepository $bookingRepository)
     {
+    }
+
+    public function addReservation(RequestBookingAddDto $bookingAddDto, User $user): JsonResponse
+    {
+        if($this->isRoomAvailabilityAtThisPeriod($bookingAddDto)) {
+            $booking = new Booking();
+            $booking
+                ->addRoomsFromCollection($bookingAddDto->getRooms())
+                ->setDateFrom($bookingAddDto->getDateFrom())
+                ->setDateTo($bookingAddDto->getDateTo())
+                ->setUserId($user->getId());
+            $this->bookingRepository->add($booking, true);
+
+            return new JsonResponse([
+                'message' => 'Reservation was added successfully.'
+            ]);
+        }
+
+        return new JsonResponse(['message' => 'The booking was unsuccessful.'], 400);
     }
 
     /**

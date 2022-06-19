@@ -6,6 +6,7 @@ use App\Repository\BookingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 class Booking
@@ -15,12 +16,15 @@ class Booking
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[Assert\Date]
     #[ORM\Column(type: 'date')]
     private $dateFrom;
 
+    #[Assert\Date]
     #[ORM\Column(type: 'date')]
     private $dateTo;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: 'integer')]
     private $userId;
 

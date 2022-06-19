@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Booking;
 use App\Entity\User;
 use App\Factory\RequestFactory;
 use App\Repository\BookingRepository;
@@ -52,21 +51,8 @@ class BookingController extends AbstractController
         /** @var User $user */
         $user = $this->getUser();
         $bookingAddDto = $this->requestFactory->prepareBookingAddDto($request->getContent());
-        if($this->availabilityService->isRoomAvailabilityAtThisPeriod($bookingAddDto)) {
-            $booking = new Booking();
-            $booking
-                ->addRoomsFromCollection($bookingAddDto->getRooms())
-                ->setDateFrom($bookingAddDto->getDateFrom())
-                ->setDateTo($bookingAddDto->getDateTo())
-                ->setUserId($user->getId());
-            $this->bookingRepository->add($booking, true);
 
-            return $this->json([
-                'message' => 'Reservation was added successfully.'
-            ]);
-        }
-
-        return new JsonResponse(['message' => 'The booking was unsuccessful.'], 400);
+        return $this->availabilityService->addReservation($bookingAddDto, $user);
     }
 
     #[Route('/booking/delete/{id}', name: 'app_booking_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
