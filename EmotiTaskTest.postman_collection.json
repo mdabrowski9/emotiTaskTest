@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "b3a5f88b-fc21-4f9b-a05b-bea199007cce",
+		"name": "EmotiTaskTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16158138"
+	},
+	"item": [
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "ReservationsList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/booking/list",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"booking",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ReservationShow",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/booking/show/{id}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"booking",
+								"show",
+								"{id}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddReservation",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "test@wp.pl",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "Qwerty123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roomIds\": [53,54],\r\n    \"dateFrom\": \"21-06-2022\",\r\n    \"dateTo\": \"28-06-2022\",\r\n    \"userId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost/booking/add",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"booking",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteReservation",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "maslo1",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jan@wp.pl",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/booking/delete/15",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"booking",
+								"delete",
+								"15"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Room",
+			"item": [
+				{
+					"name": "RoomsList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost/room/list",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"room",
+								"list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LoginUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "_username",
+							"value": "test@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "_password",
+							"value": "Qwerty123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "test1@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "plainPassword",
+							"value": "Qwerty123",
+							"type": "text"
+						},
+						{
+							"key": "agreeTerms",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "_token",
+							"value": "741e83b344f3198e344d5d0a009b.G-8Pmj6IoTDUAeyPpMtHpWwuqDu3HunboJf5ovU5SoU.aap113Pc4FqOQNXilK507j9L7XTUQZC41PGS6JxLKbBenGD5DP_LCKxmvQ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
