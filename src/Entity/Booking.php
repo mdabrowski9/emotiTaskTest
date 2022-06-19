@@ -15,9 +15,6 @@ class Booking
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\OneToMany(mappedBy: 'booking', targetEntity: Room::class)]
-    private $rooms;
-
     #[ORM\Column(type: 'date')]
     private $dateFrom;
 
@@ -27,6 +24,9 @@ class Booking
     #[ORM\Column(type: 'integer')]
     private $userId;
 
+    #[ORM\ManyToMany(targetEntity: Room::class)]
+    private $rooms;
+
     public function __construct()
     {
         $this->rooms = new ArrayCollection();
@@ -35,30 +35,6 @@ class Booking
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @return Collection<int, Room>
-     */
-    public function getRooms(): Collection
-    {
-        return $this->rooms;
-    }
-
-    public function addRoom(Room $room): self
-    {
-        if (!$this->rooms->contains($room)) {
-            $this->rooms[] = $room;
-        }
-
-        return $this;
-    }
-
-    public function removeRoom(Room $room): self
-    {
-        $this->rooms->removeElement($room);
-
-        return $this;
     }
 
     public function getDateFrom(): ?\DateTimeInterface
@@ -93,6 +69,39 @@ class Booking
     public function setUserId(int $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Room>
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): self
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms[] = $room;
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): self
+    {
+        $this->rooms->removeElement($room);
+
+        return $this;
+    }
+
+    public function addRoomsFromCollection(ArrayCollection $roomsCollection): self
+    {
+        foreach ($roomsCollection as $room){
+            $this->addRoom($room);
+        }
 
         return $this;
     }
